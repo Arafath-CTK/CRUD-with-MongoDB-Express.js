@@ -1,0 +1,16 @@
+{
+  "name": "crud-with-node.js-express-mongodb",
+  "version": "1.0.0",
+  "description": "User management web app built in Node.JS, Express.JS and MongoDB for database",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "Arafath C T K",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2"
+  }
+}
