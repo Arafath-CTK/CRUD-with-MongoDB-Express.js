@@ -8,31 +8,31 @@
   <body>
     <div class="signup-container">
       <h2>Sign Up</h2>
-      <form action="#" method="post">
+      <form action="#" method="post" onsubmit="return validateForm()">
         <input
           type="text"
           class="signup-input"
           placeholder="Full Name"
           name="fullname"
           id="fullname"
-          required
         />
+        <small id="fullnameError">{{replaceFullname}}</small>
         <input
           type="text"
           class="signup-input"
           placeholder="Email"
           name="email"
           id="email"
-          required
         />
+        <small id="emailError">{{replaceMail}}</small>
         <input
           type="password"
           class="signup-input"
           placeholder="Password"
           name="password"
           id="password"
-          required
         />
+        <small id="passwordError">{{replacePassword}}</small>
         <button type="submit" class="signup-button">Sign Up</button>
       </form>
       <div class="separator-line"></div>
@@ -41,5 +41,6 @@
         <a href="#" class="login-link">Login Here</a>
       </div>
     </div>
+    <script src="/scripts/signup.js"></script>
   </body>
 </html>

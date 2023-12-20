@@ -34,7 +34,7 @@ body {
 .signup-input {
   width: 100%;
   padding: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 2px;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -64,8 +64,7 @@ body {
   color: #3498db;
   text-decoration: none;
   margin-top: 15px;
-  margin-left: 5px; /* Added margin to separate from
-    the text */
+  margin-left: 5px;
   font-weight: bold;
   font-size: 14px;
 }
@@ -80,6 +79,15 @@ body {
   margin-bottom: 15px;
   color: #555;
   font-size: 14px;
+}
+#fullnameError,
+#emailError,
+#passwordError {
+  float: left;
+  color: rgb(255, 0, 0);
+  padding-left: 2px;
+  margin-bottom: 15px;
+  text-align: left;
 }
 @media only screen and (max-width: 500px) {
   .signup-container {

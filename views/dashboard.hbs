@@ -39,20 +39,35 @@
               id="editUsername"
               placeholder="Enter new username"
             />
+            <small
+              id="fullnameError"
+              class="error-message"
+            >{{replaceFullname}}</small>
+
             <label for="editEmail">New Email:</label>
             <input type="email" id="editEmail" placeholder="Enter new email" />
+            <small
+              id="emailError"
+              class="error-message"
+            >{{replaceMail}}</small>
+
             <label for="editOldPassword">Old Password:</label>
             <input
               type="password"
               id="editOldPassword"
               placeholder="Enter old password"
             />
+
             <label for="editPassword">New Password:</label>
             <input
               type="password"
               id="editPassword"
               placeholder="Enter new password"
             />
+            <small
+              id="passwordError"
+              class="error-message"
+            >{{replacePassword}}</small>
           </div>
           <div class="settings-options">
             <button class="save-changes-button" onclick="saveChanges()">

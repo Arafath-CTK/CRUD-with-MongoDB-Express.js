@@ -59,7 +59,8 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   padding: 30px;
   text-align: left;
-  max-width: 350px;
+  min-width: 350px;
+  max-width: 400px;
   margin: auto;
   position: relative;
 }
@@ -92,7 +93,7 @@ body {
   cursor: pointer;
   font-size: 14px;
   color: #3498db;
-  transition: none; /* Removed hover effect */
+  transition: none;
 }
 
 .settings-options {
@@ -113,7 +114,7 @@ body {
   cursor: pointer;
   font-size: 14px;
   transition: background-color 0.3s ease;
-  width: 100%;
+  width: 95%;
   display: block;
   margin-bottom: 10px;
 }
@@ -139,7 +140,20 @@ body {
   margin-bottom: 10px;
   box-sizing: border-box;
 }
-
+small {
+  float: left;
+  color: rgb(255, 0, 0);
+  padding-left: 2px;
+  margin-top: -12px;
+  text-align: left;
+}
+label {
+  display: block;
+  margin-top: 15px;
+}
+label:last-child {
+  margin-top: 2px;
+}
 @media only screen and (max-width: 500px) {
   .dashboard-container {
     width: 80%;
