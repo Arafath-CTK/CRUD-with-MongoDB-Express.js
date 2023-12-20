@@ -1,0 +1,72 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="/styles/dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <h2>Welcome, [Username]!</h2>
+      <p class="dashboard-text">
+        Thank you for joining our platform. Explore the features and make the
+        most out of your experience!
+      </p>
+      <button class="dashboard-button" onclick="openUserDetailsModal()">
+        View Profile
+      </button>
+      <button class="settings-button" onclick="openSettingsModal()">
+        Settings
+      </button>
+
+      <!-- Modal for User Details -->
+      <div class="user-details-modal" id="userDetailsModal">
+        <div class="modal-content">
+          <p class="dashboard-text"><strong>Username:</strong> [Username]</p>
+          <p class="dashboard-text"><strong>Email:</strong> [Email]</p>
+          <span class="close-button" onclick="closeUserDetailsModal()">✖</span>
+        </div>
+      </div>
+
+      <!-- Modal for Settings -->
+      <div class="settings-modal" id="settingsModal">
+        <div class="modal-content">
+          <h2>Settings</h2>
+          <div class="edit-fields">
+            <label for="editUsername">New Username:</label>
+            <input
+              type="text"
+              id="editUsername"
+              placeholder="Enter new username"
+            />
+            <label for="editEmail">New Email:</label>
+            <input type="email" id="editEmail" placeholder="Enter new email" />
+            <label for="editOldPassword">Old Password:</label>
+            <input
+              type="password"
+              id="editOldPassword"
+              placeholder="Enter old password"
+            />
+            <label for="editPassword">New Password:</label>
+            <input
+              type="password"
+              id="editPassword"
+              placeholder="Enter new password"
+            />
+          </div>
+          <div class="settings-options">
+            <button class="save-changes-button" onclick="saveChanges()">
+              Save Changes
+            </button>
+            <button class="delete-account-button" onclick="deleteAccount()">
+              Delete Account
+            </button>
+          </div>
+          <span class="close-button" onclick="closeSettingsModal()">✖</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="/scripts/dashboard.js"></script>
+  </body>
+</html>
