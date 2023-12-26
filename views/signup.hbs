@@ -8,37 +8,40 @@
   <body>
     <div class="signup-container">
       <h2>Sign Up</h2>
-      <form action="#" method="post" onsubmit="return validateForm()">
+      <form action="signup" method="post" onsubmit="return validateForm()">
         <input
           type="text"
           class="signup-input"
           placeholder="Full Name"
           name="fullname"
           id="fullname"
+          value="{{enteredName}}"
         />
-        <small id="fullnameError">{{replaceFullname}}</small>
+        <small id="fullnameError"></small>
         <input
           type="text"
           class="signup-input"
           placeholder="Email"
           name="email"
           id="email"
+          value="{{enteredEmail}}"
         />
-        <small id="emailError">{{replaceMail}}</small>
+        <small id="emailError">{{replace}}</small>
         <input
           type="password"
           class="signup-input"
           placeholder="Password"
           name="password"
           id="password"
+          value="{{enteredPassword}}"
         />
-        <small id="passwordError">{{replacePassword}}</small>
+        <small id="passwordError"></small>
         <button type="submit" class="signup-button">Sign Up</button>
       </form>
       <div class="separator-line"></div>
       <div class="existing-user">
         Already a user?
-        <a href="#" class="login-link">Login Here</a>
+        <a href="/" class="login-link">Login Here</a>
       </div>
     </div>
     <script src="/scripts/signup.js"></script>
