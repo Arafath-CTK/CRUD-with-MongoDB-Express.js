@@ -8,21 +8,23 @@
   <body>
     <div class="signin-container">
       <h2>Sign In</h2>
-      <form action="#" method="post" onsubmit="return validateForm()">
+      <form action="signin" method="post" onsubmit="return validateForm()">
         <input
           type="text"
           class="signin-input"
           placeholder="Email"
-          name="email"
+          name="signInEmail"
           id="email"
+          value="{{enteredMail}}"
         />
         <small id="emailError">{{replaceMail}}</small>
         <input
           type="password"
           class="signin-input"
           placeholder="Password"
-          name="password"
+          name="signInPassword"
           id="password"
+          value="{{enteredPassword}}"
         />
         <small id="passwordError">{{replacePassword}}</small>
         <button type="submit" class="signin-button">Sign In</button>

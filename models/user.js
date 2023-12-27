@@ -13,6 +13,6 @@ const userSchema = new mongoose.Schema({
 
 const user = mongoose.model("User", userSchema);
 // 1st argument "user" is the collection name of database,
-// 2nd argument structure of the collection.
+// 2nd argument is structure of the collection that we have already defined above.
 
 module.exports = user; // Exporting it to route handlers.

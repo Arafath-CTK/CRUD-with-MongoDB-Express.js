@@ -1,23 +1,29 @@
+const { response } = require("express");
+const { validate } = require("../../models/user");
+
 function openUserDetailsModal() {
   var userDetailsModal = document.getElementById("userDetailsModal");
   userDetailsModal.style.display = "flex";
 }
+
 function closeUserDetailsModal() {
   var userDetailsModal = document.getElementById("userDetailsModal");
   userDetailsModal.style.display = "none";
 }
+
 function openSettingsModal() {
   var settingsModal = document.getElementById("settingsModal");
   settingsModal.style.display = "flex";
 }
+
 function closeSettingsModal() {
   var settingsModal = document.getElementById("settingsModal");
   settingsModal.style.display = "none";
 }
+
 function saveChanges() {
   var newUsername = document.getElementById("editUsername").value;
   var newEmail = document.getElementById("editEmail").value;
-  var oldPassword = document.getElementById("editOldPassword").value;
   var newPassword = document.getElementById("editPassword").value;
   let errorCount = 0;
 
@@ -48,6 +54,36 @@ function saveChanges() {
     return true;
   }
 }
+
+document.getElementById("updateForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  if (validateForm()) {
+    fetch("/update", {
+      method: "put",
+      body: new URLSearchParams(new FormData(event.target)),
+      // Clicking the submit button triggers event.target to identify the form,
+      // then FormData gathers submitted data, packs it into the request body as key-value pairs,
+      // and sends it to the server for further processing.
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert(data.message);
+        } else {
+          if (data.messageEmail) {
+            document.getElementById("emailError").innerHTML = data.messageEmail;
+          }
+          if (data.messagePassword) {
+            document.getElementById("oldPasswordError").innerHTML =
+              data.messagePassword;
+          }
+        }
+      })
+      .catch((error) => console.error("error", error));
+  }
+});
+
 function deleteAccount() {
   alert("Placeholder: Delete user account.");
 }

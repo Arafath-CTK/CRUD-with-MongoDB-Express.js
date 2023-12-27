@@ -4,9 +4,13 @@ const router = express.Router(); // creating an instance of an Express.js router
 // group route handlers together and apply them to a specific set of routes.
 const routeHandler = require("../controllers/routeHandler"); // Here lies the routes as variables.
 
-router.get("/", routeHandler.home);
-router.get("/signup",routeHandler.signUpGet);
-router.post("/signup",routeHandler.signUpPost);
-
+router.get("/", routeHandler.homePage);
+router.get("/signup", routeHandler.signUpPage);
+router.post("/signup", routeHandler.signUpPost);
+router.post("/signin", routeHandler.signInPost);
+router.get("/logout", routeHandler.logout);
+router.get("/dashboard", routeHandler.dashBoardPage);
+router.put("/update", routeHandler.update);
+// router.delete("/delete", routeHandler.delete);
 
 module.exports = router;
