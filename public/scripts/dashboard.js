@@ -64,7 +64,7 @@ document
       if (isValid) {
         const response = await fetch("/update", {
           method: "PUT",
-          body: new URLSearchParams(new FormData(event.target)),
+          body: new URLSearchParams(FormData),
           // Clicking the submit button triggers event.target to identify the form,
           // then FormData gathers submitted data, packs it into the request body as key-value pairs,
           // and sends it to the server for further processing.
