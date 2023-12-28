@@ -34,14 +34,14 @@
         <div class="modal-content">
           <h2>Settings</h2>
           <div class="edit-fields">
-            <form id="updateForm" action="update" method="put" onsubmit="return saveChanges()">
+            <form id="updateForm" onsubmit="return saveChanges()">
               <label for="editUsername">New Full Name:</label>
               <input
                 type="text"
                 id="editUsername"
                 name="newFullName"
                 placeholder="Enter new Full Name"
-                value="{{replaceFullname}}"
+                value="{{fullName}}"
               />
               <small
                 id="fullnameError"
@@ -54,7 +54,7 @@
                 id="editEmail"
                 name="newEmail"
                 placeholder="Enter new email"
-                value="{{replaceMail}}"
+                value="{{eMail}}"
               />
               <small
                 id="emailError"
@@ -88,13 +88,15 @@
                 <button class="save-changes-button" type="submit" onclick="saveChanges()">
                   Save Changes
                 </button>
-                <button class="delete-account-button" type="button" onclick="deleteAccount()">
-                  Delete Account
-                </button>
               </div>
             </form>
           </div>
-          <span class="close-button" onclick="closeSettingsModal()">✖</span>
+          <div class="settings-options"></div>
+            <button class="delete-account-button" type="button" onclick="deleteAccount()">
+              Delete Account
+            </button>
+            <span class="close-button" onclick="closeSettingsModal()">✖</span>
+          </div>
         </div>
       </div>
     </div>

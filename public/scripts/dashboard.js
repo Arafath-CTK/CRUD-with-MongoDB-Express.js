@@ -17,8 +17,9 @@ function openSettingsModal() {
 }
 
 function closeSettingsModal() {
-  var settingsModal = document.getElementById("settingsModal");
-  settingsModal.style.display = "none";
+  // var settingsModal = document.getElementById("settingsModal");
+  // settingsModal.style.display = "none";
+  window.location.href = "/dashboard";
 }
 
 function saveChanges() {
@@ -55,7 +56,7 @@ function saveChanges() {
   }
 }
 
-document.getElementById("updateForm").addEventListener("submit", (event) => {
+document.getElementById("updateForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (validateForm()) {
@@ -69,7 +70,8 @@ document.getElementById("updateForm").addEventListener("submit", (event) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          alert(data.message);
+          alert(data.message); 
+          window.location.href = "/dashboard";
         } else {
           if (data.messageEmail) {
             document.getElementById("emailError").innerHTML = data.messageEmail;
@@ -80,7 +82,7 @@ document.getElementById("updateForm").addEventListener("submit", (event) => {
           }
         }
       })
-      .catch((error) => console.error("error", error));
+      .catch((error) => console.error("Error submitting form", error));
   }
 });
 

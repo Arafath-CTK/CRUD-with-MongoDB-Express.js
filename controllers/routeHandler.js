@@ -100,7 +100,9 @@ let logout = (req, res) => {
 
 let update = async (req, res) => {
   try {
+    console.log("update called");
     const { newFullName, newEmail, oldPassword, newPassword } = req.body; // Data recieved from client side
+    console.log(newFullName, newEmail, oldPassword, newPassword);
     const userDataBase = await User.findOne({
       email: req.session.userDetails.email,
     }); // Findeing the particular user from the database, and storing all data of the user in a variable.
@@ -110,13 +112,13 @@ let update = async (req, res) => {
     }
 
     const passwordMatch = await bcrypt.compare(
-      oldPassword.userDataBase.password
+      oldPassword, userDataBase.password
     );
 
     if (passwordMatch && !existingUser) {
       let newHashedPassword = await bcrypt.hash(newPassword, 10);
       const user = await User.findOneAndUpdate(
-        { __id: req.session.userDetails.__id },
+        { email: req.session.userDetails.email },
         {
           $set: {
             fullname: newFullName,
