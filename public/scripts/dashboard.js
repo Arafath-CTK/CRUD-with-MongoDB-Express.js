@@ -22,21 +22,18 @@ function closeSettingsModal() {
   window.location.href = "/dashboard";
 }
 
-function saveChanges() {
-  var newUsername = document.getElementById("editUsername").value;
-  var newEmail = document.getElementById("editEmail").value;
-  var newPassword = document.getElementById("editPassword").value;
-  let errorCount = 0;
+function validateForm(newUsername, newEmail, newPassword) {
+  let isValid = true;
 
   if (!/^[A-Za-z\s]{3,}$/.test(newUsername)) {
     document.getElementById("fullnameError").innerHTML = "*Enter a valid name";
-    errorCount++;
+    isValid = false;
   } else {
     document.getElementById("fullnameError").innerHTML = "";
   }
   if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(newEmail)) {
     document.getElementById("emailError").innerHTML = "*Enter a valid email id";
-    errorCount++;
+    isValid = false;
   } else {
     document.getElementById("emailError").innerHTML = "";
   }
@@ -44,33 +41,39 @@ function saveChanges() {
   if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(newPassword)) {
     document.getElementById("passwordError").innerHTML =
       "*Password must be 6-20 long<br>contain at least one digit<br>one lowercase letter<br>and one uppercase letter";
-    errorCount++;
+    isValid = false;
   } else {
     document.getElementById("passwordError").innerHTML = "";
   }
 
-  if (errorCount > 0) {
-    return false;
-  } else {
-    return true;
-  }
+  return isValid;
 }
 
-document.getElementById("updateForm").addEventListener("submit", async (event) => {
-  event.preventDefault();
+document
+  .getElementById("updateForm")
+  .addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-  if (validateForm()) {
-    fetch("/update", {
-      method: "put",
-      body: new URLSearchParams(new FormData(event.target)),
-      // Clicking the submit button triggers event.target to identify the form,
-      // then FormData gathers submitted data, packs it into the request body as key-value pairs,
-      // and sends it to the server for further processing.
-    })
-      .then((response) => response.json())
-      .then((data) => {
+    try {
+      const newUsername = document.getElementById("editUsername").value;
+      const newEmail = document.getElementById("editEmail").value;
+      const newPassword = document.getElementById("editPassword").value;
+
+      const isValid = validateForm(newUsername, newEmail, newPassword);
+
+      if (isValid) {
+        const response = await fetch("/update", {
+          method: "PUT",
+          body: new URLSearchParams(new FormData(event.target)),
+          // Clicking the submit button triggers event.target to identify the form,
+          // then FormData gathers submitted data, packs it into the request body as key-value pairs,
+          // and sends it to the server for further processing.
+        });
+
+        const data = await response.json();
+
         if (data.success) {
-          alert(data.message); 
+          alert(data.message);
           window.location.href = "/dashboard";
         } else {
           if (data.messageEmail) {
@@ -81,10 +84,11 @@ document.getElementById("updateForm").addEventListener("submit", async (event) =
               data.messagePassword;
           }
         }
-      })
-      .catch((error) => console.error("Error submitting form", error));
-  }
-});
+      }
+    } catch (error) {
+      console.error("Error submitting form", error);
+    }
+  });
 
 function deleteAccount() {
   alert("Placeholder: Delete user account.");
