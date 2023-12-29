@@ -11,6 +11,6 @@ router.post("/signin", routeHandler.signInPost);
 router.get("/logout", routeHandler.logout);
 router.get("/dashboard", routeHandler.dashBoardPage);
 router.put("/update", routeHandler.update);
-// router.delete("/delete", routeHandler.delete);
+router.delete("/delete", routeHandler.deleteAccount);
 
 module.exports = router;

@@ -103,7 +103,6 @@ let update = async (req, res) => {
   try {
     console.log("update called");
     const { newFullName, newEmail, oldPassword, newPassword } = req.body; // Data recieved from client side
-    console.log(newFullName, newEmail, oldPassword, newPassword);
     const userDataBase = await User.findOne({
       email: req.session.userDetails.email,
     }); // Finding the particular user from the database, and storing all data of the user in a variable.
@@ -166,6 +165,24 @@ let update = async (req, res) => {
   }
 };
 
+
+// Delete section
+let deleteAccount = async (req, res) => {
+  try {
+    const deleteId = req.session.userDetails._id
+    const deletion = await User.findByIdAndDelete(deleteId);
+    if (deletion) {
+      req.session.destroy();
+      return res.json({success: true, message: "Account deleted successfully"})
+    } else {
+      return res.status(400).json({success: false, message: "Error while account deletion"})
+    }
+  } catch (error) {
+    console.error("Unexpected error occured while deletion", error);
+    res.status(500).json({success: false, message: "Server error while deletion"})
+  }
+}
+
 module.exports = {
   homePage,
   signUpPage,
@@ -174,5 +191,6 @@ module.exports = {
   dashBoardPage,
   logout,
   update,
+  deleteAccount
 };
 // These variables will be accessed in the routes.
