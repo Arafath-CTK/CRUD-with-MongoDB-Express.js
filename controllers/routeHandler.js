@@ -145,7 +145,8 @@ let updateDetails = async (req, res) => {
         console.log("user data is updated", user);
         res.json({
           success: true,
-          message: "User details updated successfully",
+          message:
+            "User details updated successfully, You have to signin again.",
         });
       } else {
         console.log("Error updating user details");

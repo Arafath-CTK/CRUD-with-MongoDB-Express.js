@@ -1,6 +1,3 @@
-const { response } = require("express");
-const { validate } = require("../../models/user");
-
 function openUserDetailsModal() {
   var userDetailsModal = document.getElementById("userDetailsModal");
   userDetailsModal.style.display = "flex";
@@ -26,17 +23,10 @@ document
     event.preventDefault();
 
     try {
-      const formData = new FormData(event.target);
-      const encodedFormData = new URLSearchParams();
-
-      for (const pair of formData.entries()) {
-        encodedFormData.append(pair[0], encodeURIComponent(pair[1]));
-      }
-
       if (validateForm()) {
         fetch("/update", {
           method: "PUT",
-          body: encodedFormData,
+          body: new URLSearchParams(new FormData(event.target)),
           // Clicking the submit button triggers event.target to identify the form,
           // then FormData gathers submitted data, packs it into the request body as key-value pairs,
           // and sends it to the server for further processing.
@@ -45,7 +35,7 @@ document
           .then((data) => {
             console.log(data);
 
-            if (data.success) { 
+            if (data.success) {
               alert(data.message);
               window.location.href = "/logout";
             } else {
