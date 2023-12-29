@@ -57,14 +57,16 @@ document
     try {
       const newUsername = document.getElementById("editUsername").value;
       const newEmail = document.getElementById("editEmail").value;
-      const newPassword = document.getElementById("editPassword").value;
+      const newPassword = document.getElementById("newPassword").value;
 
       const isValid = validateForm(newUsername, newEmail, newPassword);
 
       if (isValid) {
+        const formData = new FormData(document.getElementById("updateForm"));
+        console.log([...formData.entries()]);
         const response = await fetch("/update", {
           method: "PUT",
-          body: new URLSearchParams(FormData),
+          body: formData,
           // Clicking the submit button triggers event.target to identify the form,
           // then FormData gathers submitted data, packs it into the request body as key-value pairs,
           // and sends it to the server for further processing.

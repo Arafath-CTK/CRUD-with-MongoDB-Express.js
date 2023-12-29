@@ -98,6 +98,7 @@ let logout = (req, res) => {
   res.redirect("/");
 };
 
+// Edit and update
 let update = async (req, res) => {
   try {
     console.log("update called");
@@ -105,14 +106,15 @@ let update = async (req, res) => {
     console.log(newFullName, newEmail, oldPassword, newPassword);
     const userDataBase = await User.findOne({
       email: req.session.userDetails.email,
-    }); // Findeing the particular user from the database, and storing all data of the user in a variable.
+    }); // Finding the particular user from the database, and storing all data of the user in a variable.
     let existingUser;
     if (userDataBase.email !== newEmail) {
       existingUser = await User.findOne({ email: newEmail });
     }
 
     const passwordMatch = await bcrypt.compare(
-      oldPassword, userDataBase.password
+      oldPassword,
+      userDataBase.password
     );
 
     if (passwordMatch && !existingUser) {
