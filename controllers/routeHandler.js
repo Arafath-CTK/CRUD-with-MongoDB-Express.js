@@ -111,7 +111,6 @@ let logout = (req, res) => {
 // Edit and update
 let updateDetails = async (req, res) => {
   try {
-    console.log("update called");
     const { newFullName, newEmail, currentPassword, newPassword } = req.body; // Data recieved from client side
 
     const userDataBase = await User.findOne({
@@ -143,10 +142,14 @@ let updateDetails = async (req, res) => {
       );
       if (user) {
         console.log("user data is updated", user);
+        req.session.userDetails = {
+          fullname: user.fullname,
+          email: user.email,
+          password: user.password,
+        };
         res.json({
           success: true,
-          message:
-            "User details updated successfully, You have to signin again.",
+          message: "User details updated successfully.",
         });
       } else {
         console.log("Error updating user details");

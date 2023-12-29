@@ -37,7 +37,7 @@ document
 
             if (data.success) {
               alert(data.message);
-              window.location.href = "/logout";
+              window.location.href = "/dashboard";
             } else {
               console.log(data);
               if (data.messageEmail) {
