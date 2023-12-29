@@ -23,68 +23,80 @@ function closeSettingsModal() {
 document
   .getElementById("updateForm")
   .addEventListener("submit", async (event) => {
-    event.preventDefault(); 
+    event.preventDefault();
 
     try {
-      const newUsername = document.getElementById("editUsername").value;
-      const newEmail = document.getElementById("editEmail").value;
-      const newPassword = document.getElementById("newPassword").value;
+      const formData = new FormData(event.target);
+      const encodedFormData = new URLSearchParams();
 
-      const isValid = validateForm(newUsername, newEmail, newPassword);
+      for (const pair of formData.entries()) {
+        encodedFormData.append(pair[0], encodeURIComponent(pair[1]));
+      }
 
-      if (isValid) {
-        const formData = new FormData(document.getElementById("updateForm"));
-        console.log([...formData.entries()]);
-        const response = await fetch("/update", {
+      if (validateForm()) {
+        fetch("/update", {
           method: "PUT",
-          body: formData,
+          body: encodedFormData,
           // Clicking the submit button triggers event.target to identify the form,
           // then FormData gathers submitted data, packs it into the request body as key-value pairs,
           // and sends it to the server for further processing.
-        });
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
 
-        const data = await response.json();
-
-        if (data.success) {
-          alert(data.message);
-          window.location.href = "/dashboard";
-        } else {
-          if (data.messageEmail) {
-            document.getElementById("emailError").innerHTML = data.messageEmail;
-          }
-          if (data.messagePassword) {
-            document.getElementById("oldPasswordError").innerHTML =
-              data.messagePassword;
-          }
-        }
+            if (data.success) { 
+              alert(data.message);
+              window.location.href = "/logout";
+            } else {
+              console.log(data);
+              if (data.messageEmail) {
+                document.getElementById("newEmailError").innerHTML =
+                  data.messageEmail;
+              }
+              if (data.messagePassword) {
+                document.getElementById("currentPasswordError").innerHTML =
+                  data.messagePassword;
+              }
+            }
+          })
+          .catch((error) => {
+            console.error("Error submitting form", error);
+          });
       }
     } catch (error) {
       console.error("Error submitting form", error);
     }
   });
 
-function validateForm(newUsername, newEmail, newPassword) {
+function validateForm() {
+  const newFullName = document.getElementById("newFullName").value;
+  const newEmail = document.getElementById("newEmail").value;
+  const newPassword = document.getElementById("newPassword").value;
+
   let isValid = true;
 
-  if (!/^[A-Za-z\s]{3,}$/.test(newUsername)) {
-    document.getElementById("fullnameError").innerHTML = "*Enter a valid name";
+  if (!/^[A-Za-z\s]{3,}$/.test(newFullName)) {
+    document.getElementById("newFullNameError").innerHTML =
+      "Enter a valid name";
     isValid = false;
   } else {
-    document.getElementById("fullnameError").innerHTML = "";
+    document.getElementById("newFullNameError").innerHTML = "";
   }
   if (!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(newEmail)) {
-    document.getElementById("emailError").innerHTML = "*Enter a valid email id";
+    document.getElementById("newEmailError").innerHTML =
+      "Enter a valid email id";
     isValid = false;
   } else {
-    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("newEmailError").innerHTML = "";
   }
 
   if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(newPassword)) {
-    document.getElementById("passwordError").innerHTML =
-      "*Password must be 6-20 long<br>contain at least one digit<br>one lowercase letter<br>and one uppercase letter";
+    document.getElementById("newPasswordError").innerHTML =
+      "Password must be 6-20 long<br>contain at least one digit<br>one lowercase letter<br>and one uppercase letter";
     isValid = false;
   } else {
-    document.getElementById("passwordError").innerHTML = "";
+    document.getElementById("newPasswordError").innerHTML = "";
   }
 
   return isValid;

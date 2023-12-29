@@ -44,7 +44,10 @@ let signUpPost = async (req, res) => {
     }
   } catch (error) {
     console.log("Error signing up", error);
-    res.status(500).render("error", { errorMessage: error });
+    res.status(500).render("error", {
+      errorMessage: "Unexpeced error occured while signing up.",
+      error,
+    });
   }
 };
 
@@ -76,20 +79,27 @@ let signInPost = async (req, res) => {
     }
   } catch (error) {
     console.error("Unexpected error occured: ", error);
-    res.status(500).render("error", { errorMessage: error });
+    res.status(500).render("error", {
+      errorMessage: "Unexpeced error occured while signing in.",
+      error,
+    });
   }
 };
 
 // Dashboard page
 let dashBoardPage = (req, res) => {
-  console.log(
-    "Dashboard accessed and session started",
-    req.session.userDetails
-  );
-  res.render("dashboard", {
-    fullName: req.session.userDetails.fullname,
-    eMail: req.session.userDetails.email,
-  });
+  if (req.session.userDetails) {
+    console.log(
+      "Dashboard accessed and session started",
+      req.session.userDetails
+    );
+    res.render("dashboard", {
+      fullName: req.session.userDetails.fullname,
+      eMail: req.session.userDetails.email,
+    });
+  } else {
+    res.render("error", { errorMessage: "You have to login first" });
+  }
 };
 
 // Logout logic
@@ -102,7 +112,7 @@ let logout = (req, res) => {
 let updateDetails = async (req, res) => {
   try {
     console.log("update called");
-    const { newFullName, newEmail, oldPassword, newPassword } = req.body; // Data recieved from client side
+    const { newFullName, newEmail, currentPassword, newPassword } = req.body; // Data recieved from client side
 
     const userDataBase = await User.findOne({
       email: req.session.userDetails.email,
@@ -114,7 +124,7 @@ let updateDetails = async (req, res) => {
     }
 
     const passwordMatch = await bcrypt.compare(
-      oldPassword,
+      currentPassword,
       userDataBase.password
     );
 
@@ -163,27 +173,40 @@ let updateDetails = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).render("error", { errorMessage: error });
+    res.status(500).render("error", {
+      errorMessage: "Unexpeced error occured while updating data to database.",
+      error,
+    });
   }
 };
-
 
 // Delete section
 let deleteAccount = async (req, res) => {
   try {
-    const deleteId = req.session.userDetails._id
+    const deleteId = req.session.userDetails._id;
     const deletion = await User.findByIdAndDelete(deleteId);
     if (deletion) {
       req.session.destroy();
-      return res.json({success: true, message: "Account deleted successfully"})
+      return res.json({
+        success: true,
+        message: "Account deleted successfully",
+      });
     } else {
-      return res.status(400).json({success: false, message: "Error while account deletion"})
+      return res
+        .status(400)
+        .json({ success: false, message: "Error while account deletion" });
     }
   } catch (error) {
     console.error("Unexpected error occured while deletion", error);
-    res.status(500).json({success: false, message: "Server error while deletion"})
+    res
+      .status(500)
+      .json({ success: false, message: "Server error while deletion" });
+    res.render("error", {
+      errorMessage: "Unexpeced error occured while deleting user profile.",
+      error,
+    });
   }
-}
+};
 
 module.exports = {
   homePage,
@@ -193,6 +216,6 @@ module.exports = {
   dashBoardPage,
   logout,
   updateDetails,
-  deleteAccount
+  deleteAccount,
 };
 // These variables will be accessed in the routes.
