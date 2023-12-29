@@ -10,7 +10,7 @@ router.post("/signup", routeHandler.signUpPost);
 router.post("/signin", routeHandler.signInPost);
 router.get("/logout", routeHandler.logout);
 router.get("/dashboard", routeHandler.dashBoardPage);
-router.put("/update", routeHandler.update);
+router.put("/update", routeHandler.updateDetails);
 router.delete("/delete", routeHandler.deleteAccount);
 
 module.exports = router;

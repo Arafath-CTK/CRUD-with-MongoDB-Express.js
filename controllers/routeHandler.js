@@ -99,13 +99,15 @@ let logout = (req, res) => {
 };
 
 // Edit and update
-let update = async (req, res) => {
+let updateDetails = async (req, res) => {
   try {
     console.log("update called");
     const { newFullName, newEmail, oldPassword, newPassword } = req.body; // Data recieved from client side
+
     const userDataBase = await User.findOne({
       email: req.session.userDetails.email,
     }); // Finding the particular user from the database, and storing all data of the user in a variable.
+
     let existingUser;
     if (userDataBase.email !== newEmail) {
       existingUser = await User.findOne({ email: newEmail });
@@ -190,7 +192,7 @@ module.exports = {
   signInPost,
   dashBoardPage,
   logout,
-  update,
+  updateDetails,
   deleteAccount
 };
 // These variables will be accessed in the routes.

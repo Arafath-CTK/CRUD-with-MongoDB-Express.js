@@ -34,42 +34,42 @@
         <div class="modal-content">
           <h2>Settings</h2>
           <div class="edit-fields">
-            <form id="updateForm">
+            <form id="updateForm" action="update" method="PUT" onsubmit="return validateForm()">
               <label for="editUsername">New Full Name:</label>
               <input
                 type="text"
-                id="editUsername"
+                id="newFullName"
                 name="newFullName"
                 placeholder="Enter new Full Name"
                 value="{{fullName}}"
               />
               <small
-                id="fullnameError"
+                id="newFullnameError"
                 class="error-message"
               ></small>
 
               <label for="editEmail">New Email:</label>
               <input
                 type="email"
-                id="editEmail"
+                id="newEmail"
                 name="newEmail"
                 placeholder="Enter new email"
                 value="{{eMail}}"
               />
               <small
-                id="emailError"
+                id="newEmailError"
                 class="error-message"
               ></small>
 
-              <label for="editOldPassword">Current Password:</label>
+              <label for="editPassword">Current Password:</label>
               <input
                 type="password"
-                id="oldPassword"
-                name="oldPassword"
+                id="currentPassword"
+                name="currentPassword"
                 placeholder="Enter current password"
               />
               <small
-                id="oldPasswordError"
+                id="currentPasswordError"
                 class="error-message"
               >{{replacePassword}}</small>
 
@@ -84,11 +84,11 @@
                 id="newPasswordError"
                 class="error-message"
               ></small>
-              <div class="settings-options">
-                <button class="save-changes-button" type="submit">
-                  Save Changes
-                </button>
-              </div>
+              {{!-- <div class="settings-options"> --}}
+              <button class="save-changes-button" type="submit">
+                Save Changes
+              </button>
+              {{!-- </div> --}}
             </form>
           </div>
           <div class="settings-options"></div>
