@@ -187,8 +187,8 @@ let updateDetails = async (req, res) => {
 // Delete section
 let deleteAccount = async (req, res) => {
   try {
-    const deleteId = req.session.userDetails._id;
-    const deletion = await User.findByIdAndDelete(deleteId);
+    const deletekey = req.session.userDetails.email;
+    const deletion = await User.findOneAndDelete(deletekey);
     if (deletion) {
       req.session.destroy();
       return res.json({
